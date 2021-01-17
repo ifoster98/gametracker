@@ -9,16 +9,15 @@ import { Fooble, PsuedoNgrxService } from '../psuedo-ngrx.service';
 })
 export class EventEntryComponent implements OnInit {
   currentMatch: string | undefined = '';
-  events: Fooble[] = [
-    {"id": 1, "fooName": "Conversion"},
-    {"id": 2, "fooName": "Try"},
-    {"id": 3, "fooName": "Penalty"},
-  ];
+  events: Fooble[] | null = null;
 
   constructor(private _ngrx: PsuedoNgrxService, private _game: GameService) {}
 
   ngOnInit(): void {
     this.currentMatch = this._ngrx.getMatch()?.name;
+    this._game.getEvents().subscribe(response => {
+      this.events = response.body;
+    });
   }
 
   endMatch() {
@@ -26,6 +25,7 @@ export class EventEntryComponent implements OnInit {
   }
 
   registerEvent(bar: Fooble) {
+    console.log(bar);
   }
 
 }

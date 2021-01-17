@@ -1,7 +1,7 @@
 Match: {{currentMatch}}
 <ul class="events">
     <li *ngFor="let event of events">
-        <button (click)="registerEvent(event)">Register {{event.fooName}}</button>
+        <button (click)="registerEvent(event)">{{event.name}}</button>
     </li>
 </ul>
 <button (click)="endMatch()">End match</button>

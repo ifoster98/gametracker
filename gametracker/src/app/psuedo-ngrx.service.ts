@@ -66,5 +66,5 @@ export interface Match {
 
 export interface Fooble {
   id: number;
-  fooName: string;
+  name: string;
 }

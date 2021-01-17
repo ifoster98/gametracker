@@ -1,16 +1,20 @@
-<div *ngIf="!isLoggedIn()">
-    <input type="text" [(ngModel)] = 'enteredUserId' />
-    <button (click)="login()">Log in</button>
-    <span>{{loginErrorMessage}}</span>
+<div class="fixed-header">
+    <div class="container" *ngIf="!isLoggedIn()">
+        <input type="text" [(ngModel)] = 'enteredUserId' />
+        <button (click)="login()">Log in</button>
+        <span>{{loginErrorMessage}}</span>
+    </div>
+    <div class="container" *ngIf="isLoggedIn()">
+        <span>User: {{enteredUserId}}</span>
+        <button (click)="logout()">Log out</button>
+    </div>
 </div>
 
-<div>
-    <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
-</div>
-<div>
-    <app-event-entry *ngIf="isEventEntryPage()"></app-event-entry>
-</div>
-
-<div *ngIf="isLoggedIn()">
-    <button (click)="logout()">Log out</button>
+<div class="container">
+    <div>
+        <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
+    </div>
+    <div>
+        <app-event-entry *ngIf="isEventEntryPage()"></app-event-entry>
+    </div>
 </div>

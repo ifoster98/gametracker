@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Match } from './psuedo-ngrx.service';
+import { Fooble, Match } from './psuedo-ngrx.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,6 @@ export class GameService {
   }
 
   getEvents() {
-    return this.http.get<Event[]>(`${this.baseUrl}/Events`, { observe: 'response' });
+    return this.http.get<Fooble[]>(`${this.baseUrl}/Events`, { observe: 'response' });
   }
 }

@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style: none;
+}
+
+.fixed-header {
+    width: 100%;
+    position: sticky;
+    background: #333;
+    padding: 10px 0;
+    color: #fff;
+}
+
+.fixed-header {
+    top: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto auto;
+}

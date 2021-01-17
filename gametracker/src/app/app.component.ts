@@ -33,6 +33,7 @@ export class AppComponent {
 
   logout() {
     this._ngrx.logout();
+    this.enteredUserId = undefined;
   }
 
   isMatchSelectionPage(): boolean {
