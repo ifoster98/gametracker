@@ -23,7 +23,10 @@ export class AppComponent {
   login() {
     this._game.login(this.enteredUserId).subscribe(response => {
       if(response.body) 
+      {
         this._ngrx.login(this.enteredUserId);
+        this.loginErrorMessage = '';
+      }
       else
         this.loginErrorMessage = 'Invalid login used. Please try again.';
     }, error => {
@@ -34,6 +37,7 @@ export class AppComponent {
   logout() {
     this._ngrx.logout();
     this.enteredUserId = undefined;
+    this.loginErrorMessage = '';
   }
 
   isMatchSelectionPage(): boolean {

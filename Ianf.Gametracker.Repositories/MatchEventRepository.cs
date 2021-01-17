@@ -6,6 +6,7 @@ using Ianf.Gametracker.Services.Domain;
 using Ianf.Gametracker.Services.Interfaces;
 using Ianf.Gametracker.Services.Errors;
 using System;
+using LanguageExt;
 
 namespace Ianf.Gametracker.Repositories
 {
@@ -15,7 +16,7 @@ namespace Ianf.Gametracker.Repositories
 
         public MatchEventRepository(GametrackerDbContext context) => _dbContext = context;
 
-        public async Task<List<MatchEvent>> GetAllMatchEventsByUserIdAsync(UserId userId) =>
+        public async Task<Either<IEnumerable<Error>, List<MatchEvent>>> GetAllMatchEventsByUserIdAsync(UserId userId) =>
             await _dbContext.MatchEvents
                 .Where(e => e.UserId == userId.Value)
                 .Select(s => s.ToDomain())
@@ -39,11 +40,6 @@ namespace Ianf.Gametracker.Repositories
             {
                 return new List<Error> { new SqlError(ex.Message) };
             }
-        }
-
-        Task<LanguageExt.Either<IEnumerable<Error>, List<MatchEvent>>> IMatchEventRepository.GetAllMatchEventsByUserIdAsync(UserId userId)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

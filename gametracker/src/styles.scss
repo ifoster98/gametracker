@@ -22,3 +22,28 @@ ul {
     width: 80%;
     margin: auto auto;
 }
+
+button {
+    color: #fff;
+}
+
+ul {
+    width: 80%;
+}
+
+.login, .logout {
+    float: right;
+    background-color: blue;
+}
+
+.gamechoice, .evententry {
+    background-color: green;
+    width: 100%;
+    margin:2%;
+}
+
+.endmatch {
+    background-color: red;
+    float: left;
+    bottom: 0;
+}

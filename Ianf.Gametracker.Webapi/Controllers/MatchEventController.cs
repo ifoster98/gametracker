@@ -54,7 +54,7 @@ namespace Ianf.Gametracker.Webapi.Controllers
             );
         }
 
-        [HttpGet]
+        [HttpGet("/MatchEvent/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllMatchEventAsync(int userId)

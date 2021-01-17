@@ -2,11 +2,13 @@ using Ianf.Gametracker.Services.Domain;
 using Ianf.Gametracker.Services.Errors;
 using Ianf.Gametracker.Services.Interfaces;
 using LanguageExt;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Ianf.Gametracker.Services.Domain.Validator;
+using static LanguageExt.Prelude;
 
 namespace Ianf.Gametracker.Services
 {
@@ -80,9 +82,20 @@ namespace Ianf.Gametracker.Services
             return matchEvent;
         }
 
-        public Task<Either<IEnumerable<Error>, List<Dto.MatchEvent>>> GetAllMatchEventsByUserIdAsync(int userId)
+        public async Task<Either<IEnumerable<Error>, List<Dto.MatchEvent>>> GetAllMatchEventsByUserIdAsync(int uid)
         {
-            throw new NotImplementedException();
+            var errors = new List<Error>();
+            var userId = new UserId();
+            UserId.CreateUserId(uid)
+                .Match(
+                    None: () => errors.Add(new DtoValidationError("Invalid amount for userId.", "MatchEvent", "UserId") ),
+                    Some: (s) => userId = s
+                );
+            if(errors.Any()) return errors;
+            var results = await _matchEventRepository.GetAllMatchEventsByUserIdAsync(userId);
+            return results.Map(Convert);
+
+            List<Dto.MatchEvent> Convert(List<Domain.MatchEvent> mes) => mes.Select(m => m.ToDto()).ToList();
         }
 
         public Task<Either<IEnumerable<Error>, int>> DeleteMatchEventAsync(Dto.MatchEvent matchEvent)

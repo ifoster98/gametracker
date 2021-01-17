@@ -1,4 +1,5 @@
 #nullable disable
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System;
 using System.Linq;
@@ -10,6 +11,7 @@ using LanguageExt;
 using static LanguageExt.Prelude;
 using System.Collections.Generic;
 using Ianf.Gametracker.Services.Errors;
+using Ianf.Gametracker.Services.Domain;
 
 namespace Ianf.Gametracker.Services.Tests
 {
@@ -151,5 +153,56 @@ namespace Ianf.Gametracker.Services.Tests
                 Right: (newId) => Assert.False(true, "Expected error.")
             );
         }  
+    
+        [Fact]
+        public async void TestGetAllEventsByUserId()
+        {
+            // Assemble
+            var matchEvents = new List<MatchEvent>(){
+                new MatchEvent(
+                    UserId.CreateUserId(42).IfNone(new UserId()),
+                    MatchId.CreateMatchId(22).IfNone(new MatchId()),
+                    DateTime.Now.AddDays(-1),
+                    MatchEventType.Conversion
+                ),
+                new MatchEvent(
+                    UserId.CreateUserId(42).IfNone(new UserId()),
+                    MatchId.CreateMatchId(22).IfNone(new MatchId()),
+                    DateTime.Now.AddDays(-1),
+                    MatchEventType.Conversion
+                )
+            };
+            Either<IEnumerable<Error>, List<MatchEvent>> returnValue = Right(matchEvents);
+            _matchEventRepository.Setup(m => m.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>())).Returns(Task.FromResult(returnValue));
+
+            // Act
+            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(42);
+
+            // Assert
+            _matchEventRepository.Verify(w => w.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>()));
+            result.Match(
+                Left: (err) => Assert.False(true, "Expected no errors to be returned."),
+                Right: (matchEvents) => Assert.Equal(2, matchEvents.Count)
+            );
+        }
+
+        [Fact]
+        public async void TestGetAllEventsByUserIdWithInvalidUserId()
+        {
+            // Assemble
+
+            // Act
+            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(-42);
+
+            // Assert
+            result.Match(
+                Left: (err) => {
+                    var dtoError = (DtoValidationError)err.First();
+                    Assert.Equal("MatchEvent", dtoError.DtoType);
+                    Assert.Equal("UserId", dtoError.DtoProperty);
+                },
+                Right: (newId) => Assert.False(true, "Expected error.")
+            );
+        }
     }
 }
