@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Ianf.Gametracker.Services.Interfaces;
+using System.Collections.Generic;
 
 namespace Ianf.Gametracker.Webapi.Controllers
 {
@@ -21,6 +22,14 @@ namespace Ianf.Gametracker.Webapi.Controllers
         public async Task<ActionResult<bool>> LoginWithUserId(int userId)
         {
             var result = await _matchEventService.LoginWithUserId(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("/Matches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Services.Dto.Match>>> Matches()
+        {
+            var result = await _matchEventService.GetMatches();
             return Ok(result);
         }
 

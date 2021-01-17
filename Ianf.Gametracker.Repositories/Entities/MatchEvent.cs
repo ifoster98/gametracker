@@ -6,6 +6,7 @@ namespace Ianf.Gametracker.Repositories.Entities
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public int MatchId { get; set; }
         public DateTime EventTime { get; set; }
         public int MatchEventType { get; set; }
     }

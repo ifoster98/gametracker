@@ -1,18 +1,17 @@
 #nullable disable
+using System.Text.RegularExpressions;
 using System;
 using System.Linq;
 using Moq;
 using Xunit;
 using System.Threading.Tasks;
-using Ianf.Gametracker.Services;
 using Ianf.Gametracker.Services.Interfaces;
 using LanguageExt;
 using static LanguageExt.Prelude;
 using System.Collections.Generic;
-using Ianf.Gametracker.Services.Domain;
 using Ianf.Gametracker.Services.Errors;
 
-namespace Ianf.Gametracker.UnitTest.Services
+namespace Ianf.Gametracker.Services.Tests
 {
     public class MatchEventServiceTests
     {
@@ -20,6 +19,7 @@ namespace Ianf.Gametracker.UnitTest.Services
         private readonly IMatchEventService _matchEventService;
 
         private readonly int userId = 1234;
+        private readonly int matchId = 22;
         private DateTime eventTime = DateTime.Now;
         private readonly MatchEventType matchEventType = MatchEventType.Conversion;
 
@@ -27,6 +27,7 @@ namespace Ianf.Gametracker.UnitTest.Services
             new Gametracker.Services.Dto.MatchEvent() 
             {
                 UserId = userId,
+                MatchId = matchId,
                 EventTime = eventTime,
                 MatchEventType = matchEventType
             };
@@ -100,6 +101,27 @@ namespace Ianf.Gametracker.UnitTest.Services
                     var dtoError = (DtoValidationError)err.First();
                     Assert.Equal("MatchEvent", dtoError.DtoType);
                     Assert.Equal("UserId", dtoError.DtoProperty);
+                },
+                Right: (newId) => Assert.False(true, "Expected error.")
+            );
+        }
+
+        [Fact]
+        public async void TestAddNewMatchEventAsyncMatchIdInvalid()
+        {
+            // Assemble
+            var newMatchEvent = GetSampleMatchEvent();
+            newMatchEvent.MatchId = -42;
+
+            // Act
+            var result = await _matchEventService.AddNewMatchEventAsync(newMatchEvent);
+
+            // Assert
+            result.Match(
+                Left: (err) => {
+                    var dtoError = (DtoValidationError)err.First();
+                    Assert.Equal("MatchEvent", dtoError.DtoType);
+                    Assert.Equal("MatchId", dtoError.DtoProperty);
                 },
                 Right: (newId) => Assert.False(true, "Expected error.")
             );

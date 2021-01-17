@@ -53,6 +53,7 @@ namespace Ianf.Gametracker.Webapi.Tests
             var newMatchEvent = new Ianf.Gametracker.Services.Dto.MatchEvent() 
             {
                 UserId = 1234,
+                MatchId = 22,
                 EventTime = DateTime.Now,
                 MatchEventType = Services.MatchEventType.Conversion
             };
@@ -84,6 +85,7 @@ namespace Ianf.Gametracker.Webapi.Tests
             var newMatchEvent = new Ianf.Gametracker.Services.Dto.MatchEvent() 
             {
                 UserId = -1234,
+                MatchId = 22,
                 EventTime = DateTime.Now,
                 MatchEventType = Services.MatchEventType.Conversion
             };

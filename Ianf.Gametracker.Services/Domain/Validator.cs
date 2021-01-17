@@ -16,8 +16,14 @@ namespace Ianf.Gametracker.Services.Domain
                     None: () => errors.Add(new DtoValidationError("Invalid amount for userId.", "MatchEvent", "UserId") ),
                     Some: (s) => userId = s
                 );
+            var matchId = new MatchId();
+            MatchId.CreateMatchId(matchEvent.MatchId)
+                .Match(
+                    None: () => errors.Add(new DtoValidationError("Invalid amount for matchId.", "MatchEvent", "MatchId") ),
+                    Some: (s) => matchId = s
+                );
             if(errors.Any()) return errors;
-            return new MatchEvent(userId, matchEvent.EventTime, matchEvent.MatchEventType);
+            return new MatchEvent(userId, matchId, matchEvent.EventTime, matchEvent.MatchEventType);
         }
     }
 }

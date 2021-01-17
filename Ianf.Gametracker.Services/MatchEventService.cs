@@ -14,9 +14,30 @@ namespace Ianf.Gametracker.Services
     {
         private readonly IMatchEventRepository _matchEventRepository;
 
-        public MatchEventService(IMatchEventRepository matchEventRepository)
-        {
+        public MatchEventService(IMatchEventRepository matchEventRepository) =>
             _matchEventRepository = matchEventRepository;
+        
+        public Task<List<Dto.Match>> GetMatches()
+        {
+            // Hard-code for now.
+            return Task.FromResult(new List<Dto.Match>
+            {
+                new Dto.Match 
+                {
+                    Id = 1,
+                    Name = "Saracens v. Wasps"
+                },
+                new Dto.Match 
+                {
+                    Id = 2,
+                    Name = "Gloucester v. Bath"
+                },
+                new Dto.Match 
+                {
+                    Id = 3,
+                    Name = "Harlequin v. Leeds"
+                }
+            });
         }
 
         public Task<bool> LoginWithUserId(int userId) =>
