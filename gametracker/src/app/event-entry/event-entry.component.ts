@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../game.service';
 import { Fooble, PsuedoNgrxService } from '../psuedo-ngrx.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-event-entry',
@@ -10,6 +11,7 @@ import { Fooble, PsuedoNgrxService } from '../psuedo-ngrx.service';
 export class EventEntryComponent implements OnInit {
   currentMatch: string | undefined = '';
   events: Fooble[] | null = null;
+  message: string = '';
 
   constructor(private _ngrx: PsuedoNgrxService, private _game: GameService) {}
 
@@ -25,7 +27,12 @@ export class EventEntryComponent implements OnInit {
   }
 
   registerEvent(bar: Fooble) {
-    console.log(bar);
+    let eventTime = formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'en');
+    this._game.saveEvent(this._ngrx.getUserId(), this._ngrx.getMatch()?.id, eventTime, bar.id).subscribe(result => {
+      this.message = 'Entry saved successfully.';
+    }, error => {
+      this.message = 'Error saving entry.';
+    });
   }
 
 }

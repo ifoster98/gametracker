@@ -21,4 +21,10 @@ export class GameService {
   getEvents() {
     return this.http.get<Fooble[]>(`${this.baseUrl}/Events`, { observe: 'response' });
   }
+
+  saveEvent(userId:number | undefined, matchId: number | undefined, eventTime: string, matchEventType: number){
+    let content = {'userId': userId, 'matchId': matchId, 'eventTime': eventTime, 'matchEventType': matchEventType};
+    console.log(content);
+    return this.http.post(`${this.baseUrl}/MatchEvent`, content);
+  }
 }
