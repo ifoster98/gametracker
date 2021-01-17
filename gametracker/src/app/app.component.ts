@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService } from './game.service';
+import { PsuedoNgrxService } from './psuedo-ngrx.service';
 
 @Component({
   selector: 'app-root',
@@ -8,23 +9,21 @@ import { GameService } from './game.service';
 })
 export class AppComponent {
   enteredUserId: number | undefined = undefined;
-  userId: number | undefined = undefined;
   loginErrorMessage: string = '';
 
-  constructor(private _game: GameService) {}
+  constructor(private _ngrx: PsuedoNgrxService, private _game: GameService) {}
 
   ngOnInit() {
   }
 
   showLoginPage(): boolean {
-    return this.userId === undefined;
+    return this._ngrx.isLoggedIn();
   }
 
   login() {
     this._game.login(this.enteredUserId).subscribe(response => {
-      console.log(response);
       if(response.body) 
-        this.userId = this.enteredUserId;
+        this._ngrx.login(this.enteredUserId);
       else
         this.loginErrorMessage = 'Invalid login used. Please try again.';
     }, error => {
@@ -33,6 +32,6 @@ export class AppComponent {
   }
 
   logout() {
-    this.userId = undefined;
+    this._ngrx.logout();
   }
 }

@@ -21,25 +21,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  it('should not show login page if userId is undefined', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.showLoginPage()).toBeTrue();
-  });
-
-  it('should show login page if userId has value', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    app.userId = 42;
-    expect(app.showLoginPage()).toBeFalse();
-  });
-
-  it('should set userid to undefined when logging out', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    app.userId = 42;
-    app.logout();
-    expect(app.showLoginPage()).toBeTrue();
-  });
 });
