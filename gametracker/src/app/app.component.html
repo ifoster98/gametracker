@@ -3,9 +3,14 @@
     <button (click)="login()">Log in</button>
     <span>{{loginErrorMessage}}</span>
 </div>
+
 <div>
     <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
 </div>
+<div>
+    <app-event-entry *ngIf="isEventEntryPage()"></app-event-entry>
+</div>
+
 <div *ngIf="isLoggedIn()">
     <button (click)="logout()">Log out</button>
 </div>

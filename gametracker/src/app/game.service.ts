@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Match } from './psuedo-ngrx.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,5 +12,9 @@ export class GameService {
 
   login(userId: number | undefined) {
     return this.http.get(`${this.baseUrl}/LoginWithUserId/${userId}`, { observe: 'response' });
+  }
+
+  getMatches() {
+    return this.http.get<Match[]>(`${this.baseUrl}/Matches`, { observe: 'response' });
   }
 }

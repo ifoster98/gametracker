@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatchSelectionComponent } from './match-selection.component';
 
 describe('MatchSelectionComponent', () => {
@@ -8,6 +8,7 @@ describe('MatchSelectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule ],
       declarations: [ MatchSelectionComponent ]
     })
     .compileComponents();

@@ -35,8 +35,36 @@ describe('PsuedoNgrxService', () => {
     expect(service.currentPage()).toEqual(ViewPage.None);
   });
 
-  it('should show MatchSelection as current page if logged in', () => {
+  it('should show MatchSelection as current page if logged in and no match selected', () => {
     service.login(42);
     expect(service.currentPage()).toEqual(ViewPage.MatchSelection);
+  });
+
+  it('should not have a match id on initialisation', () => {
+    expect(service.getMatchId()).toBeUndefined();
+  });
+
+  it('should have a match id after choosing a match', () => {
+    service.chooseMatch(22);
+    expect(service.getMatchId()).toEqual(22);
+  });
+
+  it('should not have a match id after ending the match', () => {
+    service.endMatch();
+    expect(service.getMatchId()).toBeUndefined();
+  });
+
+  it('should show EventEntry as current page if logged in and match is selected', () => {
+    service.login(42);
+    service.chooseMatch(22);
+    expect(service.currentPage()).toEqual(ViewPage.EventEntry);
+  });
+
+  it('should not have a match id after logging out', () => {
+    service.login(42);
+    service.chooseMatch(22);
+    expect(service.getMatchId()).toEqual(22);
+    service.logout();
+    expect(service.getMatchId()).toBeUndefined();
   });
 });

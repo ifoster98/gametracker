@@ -38,4 +38,8 @@ export class AppComponent {
   isMatchSelectionPage(): boolean {
     return this._ngrx.currentPage() === ViewPage.MatchSelection;
   }
+
+  isEventEntryPage(): boolean {
+    return this._ngrx.currentPage() === ViewPage.EventEntry;
+  }
 }

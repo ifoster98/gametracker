@@ -1,1 +1,5 @@
-<p>match-selection works!</p>
+<ul class="matches">
+    <li *ngFor="let match of matches">
+        <span>{{match.name}}</span><button (click)="chooseMatch(match)">Select match</button>
+    </li>
+</ul>
