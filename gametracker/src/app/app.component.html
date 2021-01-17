@@ -1,6 +1,11 @@
-<div *ngIf="showLoginPage()">
+<div *ngIf="!isLoggedIn()">
     <input type="text" [(ngModel)] = 'enteredUserId' />
     <button (click)="login()">Log in</button>
     <span>{{loginErrorMessage}}</span>
 </div>
-<router-outlet></router-outlet>
+<div>
+    <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
+</div>
+<div *ngIf="isLoggedIn()">
+    <button (click)="logout()">Log out</button>
+</div>

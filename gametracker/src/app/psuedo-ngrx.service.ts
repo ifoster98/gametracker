@@ -22,6 +22,19 @@ export class PsuedoNgrxService {
   }
 
   isLoggedIn() : boolean {
-    return this.userId === undefined;
+    return this.userId !== undefined;
   }
+
+  currentPage() : ViewPage {
+    if(!this.isLoggedIn())
+      return ViewPage.None;
+    return ViewPage.MatchSelection;
+  }
+}
+
+export enum ViewPage {
+  None,
+  MatchSelection,
+  EventEntry,
+  EventEdit
 }

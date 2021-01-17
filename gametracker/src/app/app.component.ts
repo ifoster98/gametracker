@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService } from './game.service';
-import { PsuedoNgrxService } from './psuedo-ngrx.service';
+import { PsuedoNgrxService, ViewPage } from './psuedo-ngrx.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent {
   ngOnInit() {
   }
 
-  showLoginPage(): boolean {
+  isLoggedIn(): boolean {
     return this._ngrx.isLoggedIn();
   }
 
@@ -33,5 +33,9 @@ export class AppComponent {
 
   logout() {
     this._ngrx.logout();
+  }
+
+  isMatchSelectionPage(): boolean {
+    return this._ngrx.currentPage() === ViewPage.MatchSelection;
   }
 }
