@@ -1,0 +1,49 @@
+using Ianf.Gametracker.Services.Domain;
+using Ianf.Gametracker.Services.Errors;
+using Ianf.Gametracker.Services.Interfaces;
+using LanguageExt;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using static Ianf.Gametracker.Services.Domain.Validator;
+
+namespace Ianf.Gametracker.Services
+{
+    public class MatchEventService : IMatchEventService
+    {
+        private readonly IMatchEventRepository _matchEventRepository;
+
+        public MatchEventService(IMatchEventRepository matchEventRepository)
+        {
+            _matchEventRepository = matchEventRepository;
+        }
+
+        public Task<bool> LoginWithUserId(int userId) =>
+            Task.FromResult(UserId.CreateUserId(userId).Match(None: () => false, Some: (u) => true));
+
+        public async Task<Either<IEnumerable<Error>, int>> AddNewMatchEventAsync(Dto.MatchEvent matchEvent) =>
+            await matchEvent
+                .ValidateDto()
+                .BindAsync(ValidateMatchEventToAdd)
+                .BindAsync(m => _matchEventRepository.AddNewMatchEventAsync(m));
+
+        protected async Task<Either<IEnumerable<Error>, MatchEvent>> ValidateMatchEventToAdd(MatchEvent matchEvent)
+        {
+            var errors = new List<Error>();
+            // Validation checks here.
+            if (errors.Any()) return errors;
+            return matchEvent;
+        }
+
+        public Task<Either<IEnumerable<Error>, List<Dto.MatchEvent>>> GetAllMatchEventsByUserIdAsync(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Either<IEnumerable<Error>, int>> DeleteMatchEventAsync(Dto.MatchEvent matchEvent)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

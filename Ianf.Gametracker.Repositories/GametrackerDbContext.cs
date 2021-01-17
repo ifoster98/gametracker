@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Ianf.Gametracker.Repositories.Entities;
 
 #nullable disable
@@ -18,7 +16,7 @@ namespace Ianf.Gametracker.Repositories
         {
         }
 
-        public virtual DbSet<TestData> TestDatas { get; set; }
+        public virtual DbSet<MatchEvent> MatchEvents { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,16 +30,11 @@ namespace Ianf.Gametracker.Repositories
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
-            modelBuilder.Entity<TestData>(entity =>
+            modelBuilder.Entity<MatchEvent>(entity =>
             {
-                entity.ToTable("TestData");
+                entity.ToTable("MatchEvent");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+                entity.Property(e => e.EventTime).HasColumnType("datetime");
             });
 
             OnModelCreatingPartial(modelBuilder);

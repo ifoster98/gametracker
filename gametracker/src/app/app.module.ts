@@ -1,19 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { MatchSelectionComponent } from './match-selection/match-selection.component';
+import { EventEntryComponent } from './event-entry/event-entry.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MatchSelectionComponent,
+    EventEntryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

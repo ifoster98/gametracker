@@ -1,29 +1,23 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using Ianf.Gametracker.Services.Errors;
 using LanguageExt;
 
 namespace Ianf.Gametracker.Services.Domain
 {
     public static class Validator
     {
-        public static Either<IEnumerable<DtoValidationError>, TestData> ValidateDto(this Dto.TestData testData)
+        public static Either<IEnumerable<Error>, MatchEvent> ValidateDto(this Dto.MatchEvent matchEvent)
         {
             var errors = new List<DtoValidationError>();
-            var name = new Name();
-            Name.CreateName(testData.Name)
+            var userId = new UserId();
+            UserId.CreateUserId(matchEvent.UserId)
                 .Match(
-                    None: () => errors.Add(new DtoValidationError("Invalid amount for name.", "TestData", "Name") ),
-                    Some: (s) => name = s
-                );
-            var address = new Address();
-            Address.CreateAddress(testData.Address)
-                .Match(
-                    None: () => errors.Add(new DtoValidationError("Invalid amount for address.", "TestData", "Address")),
-                    Some: (s) => address = s
+                    None: () => errors.Add(new DtoValidationError("Invalid amount for userId.", "MatchEvent", "UserId") ),
+                    Some: (s) => userId = s
                 );
             if(errors.Any()) return errors;
-            return new TestData(name, testData.DateOfBirth, address);
+            return new MatchEvent(userId, matchEvent.EventTime, matchEvent.MatchEventType);
         }
     }
 }

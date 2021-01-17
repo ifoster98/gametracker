@@ -1,4 +1,6 @@
-<span>{{title}}</span>
-<span>{{results}}</span>
-
+<div *ngIf="showLoginPage()">
+    <input type="text" [(ngModel)] = 'enteredUserId' />
+    <button (click)="login()">Log in</button>
+    <span>{{loginErrorMessage}}</span>
+</div>
 <router-outlet></router-outlet>

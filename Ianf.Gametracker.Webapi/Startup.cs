@@ -26,8 +26,8 @@ namespace Ianf.Gametracker.Webapi
         {
             services.AddDbContext<GametrackerDbContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("GametrackerDatabase")));
-            services.AddTransient<ITestDataService, TestDataService>();
-            services.AddTransient<ITestDataRepository, TestDataRepository>();
+            services.AddTransient<IMatchEventService, MatchEventService>();
+            services.AddTransient<IMatchEventRepository, MatchEventRepository>();
             services.AddCors(options => {
                 options.AddPolicy(name: LocalOrigins,
                     builder => {
