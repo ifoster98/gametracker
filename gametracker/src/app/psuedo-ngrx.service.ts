@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class PsuedoNgrxService {
 
   private userId: number | undefined = undefined;
-  private matchId: number | undefined = undefined;
+  private match: Match | undefined = undefined;
 
   constructor() { }
 
@@ -16,7 +16,7 @@ export class PsuedoNgrxService {
 
   logout() {
     this.userId = undefined;
-    this.matchId = undefined;
+    this.match = undefined;
   }
 
   getUserId(): number | undefined {
@@ -27,20 +27,20 @@ export class PsuedoNgrxService {
     return this.userId !== undefined;
   }
 
-  chooseMatch(matchId: number) {
-    this.matchId = matchId;
+  chooseMatch(match: Match) {
+    this.match = match;
   }
 
   endMatch() {
-    this.matchId = undefined;
+    this.match = undefined;
   }
 
-  getMatchId(): number | undefined {
-    return this.matchId;
+  getMatch(): Match | undefined {
+    return this.match;
   }
 
   isAtMatch(): boolean {
-    return this.matchId !== undefined;
+    return this.match !== undefined;
   }
 
   currentPage() : ViewPage {
@@ -62,4 +62,9 @@ export enum ViewPage {
 export interface Match {
   id: number;
   name: string;
+}
+
+export interface Fooble {
+  id: number;
+  fooName: string;
 }

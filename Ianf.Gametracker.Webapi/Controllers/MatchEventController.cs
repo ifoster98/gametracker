@@ -33,6 +33,14 @@ namespace Ianf.Gametracker.Webapi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/Events")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<Services.Dto.Event>>> Events()
+        {
+            var result = await _matchEventService.GetEvents();
+            return Ok(result);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

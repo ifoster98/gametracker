@@ -20,7 +20,7 @@ export class MatchSelectionComponent implements OnInit {
 
   chooseMatch(match: Match | null) {
     if(match === null) return;
-    this._ngrx.chooseMatch(match.id);
+    this._ngrx.chooseMatch(match);
   }
 
 }

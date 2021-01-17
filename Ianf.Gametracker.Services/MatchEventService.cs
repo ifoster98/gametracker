@@ -40,6 +40,29 @@ namespace Ianf.Gametracker.Services
             });
         }
 
+        public Task<List<Dto.Event>> GetEvents()
+        {
+            // Hard-code for now.
+            return Task.FromResult(new List<Dto.Event>
+            {
+                new Dto.Event 
+                {
+                    Id = 1,
+                    Name = "Conversion"
+                },
+                new Dto.Event 
+                {
+                    Id = 2,
+                    Name = "Try"
+                },
+                new Dto.Event 
+                {
+                    Id = 3,
+                    Name = "Penalty"
+                }
+            });
+        }
+
         public Task<bool> LoginWithUserId(int userId) =>
             Task.FromResult(UserId.CreateUserId(userId).Match(None: () => false, Some: (u) => true));
 

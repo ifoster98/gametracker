@@ -1,1 +1,7 @@
-<p>event-entry works!</p>
+Match: {{currentMatch}}
+<ul class="events">
+    <li *ngFor="let event of events">
+        <button (click)="registerEvent(event)">Register {{event.fooName}}</button>
+    </li>
+</ul>
+<button (click)="endMatch()">End match</button>

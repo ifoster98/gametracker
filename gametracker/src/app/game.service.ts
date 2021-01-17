@@ -17,4 +17,8 @@ export class GameService {
   getMatches() {
     return this.http.get<Match[]>(`${this.baseUrl}/Matches`, { observe: 'response' });
   }
+
+  getEvents() {
+    return this.http.get<Event[]>(`${this.baseUrl}/Events`, { observe: 'response' });
+  }
 }

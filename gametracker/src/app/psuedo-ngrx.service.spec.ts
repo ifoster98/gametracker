@@ -41,30 +41,30 @@ describe('PsuedoNgrxService', () => {
   });
 
   it('should not have a match id on initialisation', () => {
-    expect(service.getMatchId()).toBeUndefined();
+    expect(service.getMatch()).toBeUndefined();
   });
 
   it('should have a match id after choosing a match', () => {
-    service.chooseMatch(22);
-    expect(service.getMatchId()).toEqual(22);
+    service.chooseMatch({id: 22, name: 'test'});
+    expect(service.getMatch()).toEqual({id: 22, name: 'test'});
   });
 
   it('should not have a match id after ending the match', () => {
     service.endMatch();
-    expect(service.getMatchId()).toBeUndefined();
+    expect(service.getMatch()).toBeUndefined();
   });
 
   it('should show EventEntry as current page if logged in and match is selected', () => {
     service.login(42);
-    service.chooseMatch(22);
+    service.chooseMatch({id: 22, name: 'test'});
     expect(service.currentPage()).toEqual(ViewPage.EventEntry);
   });
 
   it('should not have a match id after logging out', () => {
     service.login(42);
-    service.chooseMatch(22);
-    expect(service.getMatchId()).toEqual(22);
+    service.chooseMatch({id: 22, name: 'test'});
+    expect(service.getMatch()).toEqual({id: 22, name: 'test'});
     service.logout();
-    expect(service.getMatchId()).toBeUndefined();
+    expect(service.getMatch()).toBeUndefined();
   });
 });
