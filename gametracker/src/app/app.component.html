@@ -14,10 +14,7 @@
 </div>
 
 <div class="container">
-    <div>
-        <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
-    </div>
-    <div>
-        <app-event-entry *ngIf="isEventEntryPage()"></app-event-entry>
-    </div>
+    <app-match-selection *ngIf="isMatchSelectionPage()"></app-match-selection>
+    <app-event-entry *ngIf="isEventEntryPage()"></app-event-entry>
+    <app-edit-entries *ngIf="isEventEditPage()"></app-edit-entries>
 </div>

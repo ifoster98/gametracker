@@ -47,4 +47,8 @@ export class AppComponent {
   isEventEntryPage(): boolean {
     return this._ngrx.currentPage() === ViewPage.EventEntry;
   }
+
+  isEventEditPage(): boolean {
+    return this._ngrx.currentPage() === ViewPage.EventEdit;
+  }
 }

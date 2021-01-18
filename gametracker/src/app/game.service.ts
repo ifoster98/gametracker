@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Fooble, Match } from './psuedo-ngrx.service';
+import { Fooble, Match, MatchEvent } from './psuedo-ngrx.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +22,12 @@ export class GameService {
     return this.http.get<Fooble[]>(`${this.baseUrl}/Events`, { observe: 'response' });
   }
 
+  getMatchEvents(userId: number | undefined) {
+    return this.http.get<MatchEvent[]>(`${this.baseUrl}/MatchEvent/${userId}`);
+  }
+
   saveEvent(userId:number | undefined, matchId: number | undefined, eventTime: string, matchEventType: number){
     let content = {'userId': userId, 'matchId': matchId, 'eventTime': eventTime, 'matchEventType': matchEventType};
-    console.log(content);
     return this.http.post(`${this.baseUrl}/MatchEvent`, content);
   }
 }

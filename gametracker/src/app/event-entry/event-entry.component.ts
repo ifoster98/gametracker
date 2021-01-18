@@ -22,13 +22,19 @@ export class EventEntryComponent implements OnInit {
     });
   }
 
+  editEntries() {
+    this._game.getMatchEvents(this._ngrx.getUser()?.id).subscribe(response => {
+      this._ngrx.setMatchEvents(response);
+    });
+  }
+
   endMatch() {
     this._ngrx.endMatch();
   }
 
   registerEvent(bar: Fooble) {
     let eventTime = formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'en');
-    this._game.saveEvent(this._ngrx.getUserId(), this._ngrx.getMatch()?.id, eventTime, bar.id).subscribe(result => {
+    this._game.saveEvent(this._ngrx.getUser()?.id, this._ngrx.getMatch()?.id, eventTime, bar.id).subscribe(result => {
       this.message = 'Entry saved successfully.';
     }, error => {
       this.message = 'Error saving entry.';
