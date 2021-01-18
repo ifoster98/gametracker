@@ -22,8 +22,8 @@ export class GameService {
     return this.http.get<Fooble[]>(`${this.baseUrl}/Events`, { observe: 'response' });
   }
 
-  getMatchEvents(userId: number | undefined) {
-    return this.http.get<MatchEvent[]>(`${this.baseUrl}/MatchEvent/${userId}`);
+  getMatchEvents(userId: number | undefined, matchId: number | undefined) {
+    return this.http.get<MatchEvent[]>(`${this.baseUrl}/MatchEvent/${userId}/${matchId}`);
   }
 
   saveEvent(userId:number | undefined, matchId: number | undefined, eventTime: string, matchEventType: number){

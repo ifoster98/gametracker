@@ -49,6 +49,10 @@ export class PsuedoNgrxService {
     this.matchEvents = mEvents
   }
 
+  endEditing() {
+    this.matchEvents = undefined;
+  }
+
   getMatchEvents() : MatchEvent[] | undefined {
     return this.matchEvents;
   }

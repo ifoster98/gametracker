@@ -173,13 +173,13 @@ namespace Ianf.Gametracker.Services.Tests
                 )
             };
             Either<IEnumerable<Error>, List<MatchEvent>> returnValue = Right(matchEvents);
-            _matchEventRepository.Setup(m => m.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>())).Returns(Task.FromResult(returnValue));
+            _matchEventRepository.Setup(m => m.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>(), It.IsAny<MatchId>())).Returns(Task.FromResult(returnValue));
 
             // Act
-            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(42);
+            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(42, 22);
 
             // Assert
-            _matchEventRepository.Verify(w => w.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>()));
+            _matchEventRepository.Verify(w => w.GetAllMatchEventsByUserIdAsync(It.IsAny<UserId>(), It.IsAny<MatchId>()));
             result.Match(
                 Left: (err) => Assert.False(true, "Expected no errors to be returned."),
                 Right: (matchEvents) => Assert.Equal(2, matchEvents.Count)
@@ -192,7 +192,7 @@ namespace Ianf.Gametracker.Services.Tests
             // Assemble
 
             // Act
-            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(-42);
+            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(-42, 22);
 
             // Assert
             result.Match(
@@ -200,6 +200,25 @@ namespace Ianf.Gametracker.Services.Tests
                     var dtoError = (DtoValidationError)err.First();
                     Assert.Equal("MatchEvent", dtoError.DtoType);
                     Assert.Equal("UserId", dtoError.DtoProperty);
+                },
+                Right: (newId) => Assert.False(true, "Expected error.")
+            );
+        }
+
+        [Fact]
+        public async void TestGetAllEventsByUserIdWithInvalidMatchId()
+        {
+            // Assemble
+
+            // Act
+            var result = await _matchEventService.GetAllMatchEventsByUserIdAsync(42, -22);
+
+            // Assert
+            result.Match(
+                Left: (err) => {
+                    var dtoError = (DtoValidationError)err.First();
+                    Assert.Equal("MatchEvent", dtoError.DtoType);
+                    Assert.Equal("MatchId", dtoError.DtoProperty);
                 },
                 Right: (newId) => Assert.False(true, "Expected error.")
             );

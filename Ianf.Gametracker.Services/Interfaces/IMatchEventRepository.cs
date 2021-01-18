@@ -9,7 +9,7 @@ namespace Ianf.Gametracker.Services.Interfaces
     public interface IMatchEventRepository
     {
         Task<Either<IEnumerable<Error>, int>> AddNewMatchEventAsync(MatchEvent matchEvent);
-        Task<Either<IEnumerable<Error>, List<MatchEvent>>> GetAllMatchEventsByUserIdAsync(UserId userId);
+        Task<Either<IEnumerable<Error>, List<MatchEvent>>> GetAllMatchEventsByUserIdAsync(UserId userId, MatchId matchId);
         Task<Either<IEnumerable<Error>, int>> DeleteMatchEventAsync(MatchEvent matchEvent);
     }
 }

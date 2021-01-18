@@ -16,9 +16,10 @@ namespace Ianf.Gametracker.Repositories
 
         public MatchEventRepository(GametrackerDbContext context) => _dbContext = context;
 
-        public async Task<Either<IEnumerable<Error>, List<MatchEvent>>> GetAllMatchEventsByUserIdAsync(UserId userId) =>
+        public async Task<Either<IEnumerable<Error>, List<MatchEvent>>> GetAllMatchEventsByUserIdAsync(UserId userId, MatchId matchId) =>
             await _dbContext.MatchEvents
                 .Where(e => e.UserId == userId.Value)
+                .Where(e => e.MatchId == matchId.Value)
                 .Select(s => s.ToDomain())
                 .ToListAsync();
 

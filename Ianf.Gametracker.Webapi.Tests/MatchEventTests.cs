@@ -126,7 +126,7 @@ namespace Ianf.Gametracker.Webapi.Tests
             result.EnsureSuccessStatusCode();
 
             // Act
-            url = $"{_baseUrl}/MatchEvent/1234"; 
+            url = $"{_baseUrl}/MatchEvent/1234/22"; 
             result = await _client.GetAsync(url);
 
             // Assert

@@ -82,7 +82,7 @@ namespace Ianf.Gametracker.Services
             return matchEvent;
         }
 
-        public async Task<Either<IEnumerable<Error>, List<Dto.MatchEvent>>> GetAllMatchEventsByUserIdAsync(int uid)
+        public async Task<Either<IEnumerable<Error>, List<Dto.MatchEvent>>> GetAllMatchEventsByUserIdAsync(int uid, int mid)
         {
             var errors = new List<Error>();
             var userId = new UserId();
@@ -91,8 +91,14 @@ namespace Ianf.Gametracker.Services
                     None: () => errors.Add(new DtoValidationError("Invalid amount for userId.", "MatchEvent", "UserId") ),
                     Some: (s) => userId = s
                 );
+            var matchId = new MatchId();
+            MatchId.CreateMatchId(mid)
+                .Match(
+                    None: () => errors.Add(new DtoValidationError("Invalid amount for matchId.", "MatchEvent", "MatchId") ),
+                    Some: (s) => matchId = s
+                );
             if(errors.Any()) return errors;
-            var results = await _matchEventRepository.GetAllMatchEventsByUserIdAsync(userId);
+            var results = await _matchEventRepository.GetAllMatchEventsByUserIdAsync(userId, matchId);
             return results.Map(Convert);
 
             List<Dto.MatchEvent> Convert(List<Domain.MatchEvent> mes) => mes.Select(m => m.ToDto()).ToList();

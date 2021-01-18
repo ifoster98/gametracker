@@ -23,7 +23,8 @@ export class EventEntryComponent implements OnInit {
   }
 
   editEntries() {
-    this._game.getMatchEvents(this._ngrx.getUser()?.id).subscribe(response => {
+    this._game.getMatchEvents(this._ngrx.getUser()?.id, this._ngrx.getMatch()?.id).subscribe(response => {
+      console.log(response);
       this._ngrx.setMatchEvents(response);
     });
   }
